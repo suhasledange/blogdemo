@@ -9,7 +9,7 @@ export class Service {
   constructor() {
     this.client
       .setEndpoint(conf.APPWRITE_URL)
-      .setEndpoint(conf.APPWRITE_PROJECT_ID);
+      .setProject(conf.APPWRITE_PROJECT_ID);
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
@@ -76,12 +76,11 @@ export class Service {
     }
   }
 
-  async getPosts(queries = [Query.equal("status", "active")]) {
+  async getPosts() {
     try {
-      await this.databases.listDocuments(
+     return await this.databases.listDocuments(
         conf.APPWRITE_DATABASE_ID,
         conf.APPWRITE_COLLECTION_ID,
-        queries
       );
     } catch (error) {
       throw error;
